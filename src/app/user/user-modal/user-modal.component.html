@@ -1,0 +1,40 @@
+<div bsModal #addUserModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div *ngIf="user && action !== 'Delete'" class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" *ngIf="isEditing === false">Add New User</h4>
+        <h4 class="modal-title" *ngIf="isEditing === true">Edit User</h4>
+      </div>
+      <form (ngSubmit)="onSubmit()" [formGroup]="userForm" novalidate>
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group col-sm-6" [ngClass]="{'has-error': !userForm.controls['name'].valid && (userForm.controls['name'].touched || userFormSubmitted)}">
+              <label for="nameInput" class="control-label">Name</label>
+              <input type="text" class="form-control" id="nameInput" formControlName="name" />
+              <span class="help-block" *ngIf="userForm.get('name').hasError('required') && (userForm.get('name').touched || userForm.submitted)">Name is a required field.</span>
+            </div>
+          </div>
+          <div class="row">
+            <div *ngFor="let group of groups" class="form-group label-floating col-md-6">
+              <div class="input-group">
+                <label class="control-label" [ngClass]="group" [attr.for]="group + 'Input'">{{group | capitalize}}</label>
+                <input type="number" class="form-control" [ngClass]="group" [attr.id]="group + 'Input'" formControlName="{{group}}" />
+                <span class="input-group-btn">
+                  <button type="button" tabindex="-1" class="btn btn-danger btn-block btn-raised" (click)="updateValue(group, '-')">-</button>
+                </span>
+                <span class="input-group-btn">
+                  <button type="button" tabindex="-1" class="btn btn-success btn-block btn-raised" (click)="updateValue(group, '+')">+</button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-block" (click)="closeUserModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-block" *ngIf="isEditing === false">Add</button>
+          <button type="submit" class="btn btn-primary btn-block" *ngIf="isEditing === true">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

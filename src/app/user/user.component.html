@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h3>
+    Users <button (click)="showUserModal()" class="btn btn-primary pull-right"><i class="material-icons">add</i><span class="hidden-xs"> Add User</span></button>
+  </h3>
+</div>
+<tdf-user-modal [user]="selectedUser" [action]="action" (update)="update($event)"></tdf-user-modal>
+<tdf-delete-user-modal [user]="selectedUser" [action]="action" (delete)="deleteUser($event)"></tdf-delete-user-modal>
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Green</th>
+      <th>Purple</th>
+      <th>Red</th>
+      <th>Yellow</th>
+      <th>Blue</th>
+      <th>Orange</th>
+      <th>Teaspoon</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td width="100">{{user.name}}</td>
+      <td width="100"><span class="label label-green">{{user.green}}</span></td>
+      <td width="100"><span class="label label-purple">{{user.purple}}</span></td>
+      <td width="100"><span class="label label-red">{{user.red}}</span></td>
+      <td width="100"><span class="label label-yellow">{{user.yellow}}</span></td>
+      <td width="100"><span class="label label-blue">{{user.blue}}</span></td>
+      <td width="100"><span class="label label-orange">{{user.orange}}</span></td>
+      <td width="100"><span class="label label-teaspoon">{{user.teaspoon}}</span></td>
+      <td width="100">
+        <button type="button" class="btn btn-info" (click)="editUser(user)"><i class="material-icons">create</i><span class="hidden-xs"> Edit</span></button>
+      </td>
+      <td width="100">
+        <button type="button" class="btn btn-danger" (click)="showDeleteModal(user)"><i class="material-icons">delete</i><span class="hidden-xs"> Delete</span></button>
+      </td>
+    </tr>
+  </tbody>
+</table>

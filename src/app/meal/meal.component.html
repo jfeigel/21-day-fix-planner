@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h3>
+    Meals <button (click)="showMealModal()" class="btn btn-primary pull-right"><i class="material-icons">add</i><span class="hidden-xs"> Add Meal</span></button>
+  </h3>
+</div>
+<tdf-meal-modal [meal]="selectedMeal" [action]="action" (update)="update($event)"></tdf-meal-modal>
+<tdf-delete-meal-modal [meal]="selectedMeal" [action]="action" (delete)="deleteMeal($event)"></tdf-delete-meal-modal>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Meal</th>
+      <th>Points</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let meal of meals">
+      <td width="200">{{meal.name}}</td>
+      <!--
+      <td width="100"><span class="label label-green">{{meal.green}}</span></td>
+      <td width="100"><span class="label label-purple">{{meal.purple}}</span></td>
+      <td width="100"><span class="label label-red">{{meal.red}}</span></td>
+      <td width="100"><span class="label label-yellow">{{meal.yellow}}</span></td>
+      <td width="100"><span class="label label-blue">{{meal.blue}}</span></td>
+      <td width="100"><span class="label label-orange">{{meal.orange}}</span></td>
+      <td width="100"><span class="label label-teaspoon">{{meal.teaspoon}}</span></td>
+      -->
+      <td width="400">
+        <span *ngFor="let group of groups" class="label" [ngClass]="getMealClass(group, meal[group])">{{meal[group]}}</span>
+      </td>
+      <td width="100">
+        <button type="button" class="btn btn-info" (click)="editMeal(meal)"><i class="material-icons">create</i><span class="hidden-xs"> Edit</span></button>
+      </td>
+      <td width="100">
+        <button type="button" class="btn btn-danger" (click)="showDeleteModal(meal)"><i class="material-icons">delete</i><span class="hidden-xs"> Delete</span></button>
+      </td>
+    </tr>
+  </tbody>
+</table>

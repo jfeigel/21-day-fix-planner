@@ -1,0 +1,44 @@
+<div bsModal #addMealModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mealModalLabel" aria-hidden="true">
+  <div *ngIf="meal && action !== 'Delete'" class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" *ngIf="isEditing === false">Add New Meal</h4>
+        <h4 class="modal-title" *ngIf="isEditing === true">Edit Meal</h4>
+      </div>
+      <form (ngSubmit)="onSubmit()" [formGroup]="mealForm" novalidate>
+        <div class="modal-body">
+          <div class="form-group label-floating" [ngClass]="{'has-error': !mealForm.controls['name'].valid && (mealForm.controls['name'].touched || mealFormSubmitted)}">
+            <label for="nameInput" class="control-label">Name</label>
+            <input type="text" class="form-control" id="nameInput" formControlName="name" />
+            <p class="help-block" *ngIf="mealForm.get('name').hasError('required') && (mealForm.get('name').touched || mealForm.submitted)">Name is a required field.</p>
+          </div>
+          <div class="form-group">
+            <label for="tagInput" class="control-label">Tags</label>
+            <select class="form-control select" id="tagInput">
+              <option value="New">New</option>
+            </select>
+          </div>
+          <div class="row">
+            <div *ngFor="let group of groups" class="form-group label-floating col-md-6">
+              <div class="input-group">
+                <label class="control-label" [ngClass]="group" [attr.for]="group + 'Input'">{{group | capitalize}}</label>
+                <input type="number" class="form-control" [ngClass]="group" [attr.id]="group + 'Input'" formControlName="{{group}}" />
+                <span class="input-group-btn">
+                  <button type="button" tabindex="-1" class="btn btn-danger btn-block btn-raised" (click)="updateValue(group, '-')">-</button>
+                </span>
+                <span class="input-group-btn">
+                  <button type="button" tabindex="-1" class="btn btn-success btn-block btn-raised" (click)="updateValue(group, '+')">+</button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="closeMealModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" *ngIf="isEditing === false">Add</button>
+          <button type="submit" class="btn btn-primary" *ngIf="isEditing === true">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
