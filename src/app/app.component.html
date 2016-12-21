@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<!--<nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" (click)="isMenuCollapsed = !isMenuCollapsed">
@@ -17,7 +17,13 @@
       </ul>
     </div>
   </div>
-</nav>
-<div class="container">
+</nav>-->
+<md-toolbar color="primary">
+  <button>
+    <i class="material-icons">menu</i>
+  </button>
+  <span>{{title}}</span>
+</md-toolbar>
+<div class="app-content">
   <router-outlet></router-outlet>
 </div>

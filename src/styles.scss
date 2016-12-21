@@ -6,6 +6,22 @@ $blue: #0072BB;
 $orange: #F36523;
 $teaspoon: #999999;
 
+@import '~@angular/material/core/theming/all-theme';
+
+@include md-core();
+
+$primary: md-palette($md-light-blue);
+$accent:  md-palette($md-deep-purple, A200, A100, A400);
+
+$theme: md-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
+
+body {
+  font-family: Roboto, Helvetica Neue ,sans-serif;
+  margin: 0;
+}
+
 .loading {
   position: absolute;
   top: 30%;
@@ -26,7 +42,15 @@ table.table > tbody > tr > td {
 .label.label-blue,
 .label.label-orange,
 .label.label-teaspoon,
-.label.label-disabled {
+.label.label-disabled,
+md-grid-tile.green,
+md-grid-tile.purple,
+md-grid-tile.red,
+md-grid-tile.yellow,
+md-grid-tile.blue,
+md-grid-tile.orange,
+md-grid-tile.teaspoon,
+md-grid-tile.disabled {
   text-shadow: 1px 1px 0px rgba(50,50,50,0.5);
   padding: .4em .8em .5em;
   margin: 0 .5rem;
@@ -34,34 +58,42 @@ table.table > tbody > tr > td {
   display: inline-block;
 }
 
+md-grid-tile.green,
 .label-green {
   background-color: $green;
 }
 
+md-grid-tile.purple,
 .label-purple {
   background-color: $purple;
 }
 
+md-grid-tile.red,
 .label-red {
   background-color: $red;
 }
 
+md-grid-tile.yellow,
 .label-yellow {
   background-color: $yellow;
 }
 
+md-grid-tile.blue,
 .label-blue {
   background-color: $blue;
 }
 
+md-grid-tile.orange,
 .label-orange {
   background-color: $orange;
 }
 
+md-grid-tile.teaspoon,
 .label-teaspoon {
   background-color: $teaspoon;
 }
 
+md-grid-tile.disabled,
 .label-disabled {
   background-color: #DDDDDD;
   color: #BBBBBB;

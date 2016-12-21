@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import { MaterialModule } from '@angular/material';
 
 import { CollapseModule, ModalModule } from 'ng2-bootstrap';
 
@@ -58,7 +59,8 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     CollapseModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MaterialModule.forRoot()
   ],
   providers: [
     UserService,
