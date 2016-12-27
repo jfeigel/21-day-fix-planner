@@ -2,6 +2,8 @@
 module.exports = function(sequelize, DataTypes) {
   var Meal = sequelize.define('Meal', {
     name: DataTypes.STRING,
+    image: DataTypes.STRING,
+    description: DataTypes.TEXT,
     green: {
       type: DataTypes.DECIMAL,
       defaultValue: 0.0

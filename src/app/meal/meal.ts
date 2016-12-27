@@ -1,6 +1,7 @@
 export class Meal {
   id: String;
   name: String;
+  description: String;
   green: number = 0;
   purple: number = 0;
   red: number = 0;
@@ -13,5 +14,6 @@ export class Meal {
   constructor() {
     this.id = null;
     this.name = null;
+    this.description = null;
   }
 }

@@ -11,6 +11,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      image: {
+        type: Sequelize.STRING
+      },
       green: {
         type: Sequelize.DECIMAL
       },

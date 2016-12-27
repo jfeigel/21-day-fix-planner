@@ -1,26 +1,8 @@
-<div bsModal #deleteUserModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
-  <div *ngIf="user && action === 'Delete'" class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Delete User</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-sm-12">
-            <p>Are you sure you want to delete <strong>{{user.name}}</strong>?</p>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <div class="col-sm-6">
-            <button type="button" class="btn btn-primary btn-block" (click)="onSubmit(false)">No, Cancel</button>
-          </div>
-          <div class="col-sm-6">
-            <button type="button" class="btn btn-danger btn-block" (click)="onSubmit(true)">Yes, Delete User</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<h4 md-dialog-title>Delete User</h4>
+<md-dialog-content>
+  <p>Are you sure you want to delete <strong>{{user.name}}</strong>?</p>
+</md-dialog-content>
+<md-dialog-actions>
+  <button type="button" md-button md-dialog-close color="primary">Cancel</button>
+  <button type="button" md-button color="primary" (click)="dialogRef.close(user.id)">Delete</button>
+</md-dialog-actions>

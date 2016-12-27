@@ -1,12 +1,6 @@
 import {
   Component,
-  Inject,
-  EventEmitter,
-  Input,
-  Output,
-  OnInit,
-  OnChanges,
-  ViewChild
+  OnInit
 } from '@angular/core';
 
 import {
@@ -17,7 +11,8 @@ import {
   Validators
 } from '@angular/forms';
 
-import { ModalDirective } from 'ng2-bootstrap';
+import { MdDialogRef } from '@angular/material';
+
 import * as _ from 'lodash';
 
 import { Meal } from '../meal';
@@ -28,12 +23,8 @@ import { MealService } from '../meal.service';
   templateUrl: './meal-modal.component.html',
   styleUrls: ['./meal-modal.component.scss']
 })
-export class MealModalComponent implements OnInit, OnChanges {
-  @Input() meal: Meal;
-  @Input() action: String;
-  @Output() update = new EventEmitter();
-  @ViewChild('addMealModal') public addMealModal: ModalDirective;
-
+export class MealModalComponent implements OnInit {
+  meal: Meal;
   newMeal: Meal = new Meal();
   mealForm: FormGroup;
   isEditing: Boolean = false;
@@ -42,45 +33,40 @@ export class MealModalComponent implements OnInit, OnChanges {
 
   constructor(
     private mealService: MealService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialogRef: MdDialogRef<MealModalComponent>
   ) { }
 
   ngOnInit() {
     for (let key in this.newMeal) {
       if (this.newMeal.hasOwnProperty(key)) {
-        if (['name', 'id', 'tags'].indexOf(key) === -1) {
+        if (['name', 'id', 'tags', 'description'].indexOf(key) === -1) {
           this.groups.push(key);
         }
       }
     }
-  }
 
-  ngOnChanges(changes) {
-    if (changes.meal.currentValue && this.action !== 'Delete') {
-      this.isEditing = !_.isEqual(this.meal, this.newMeal);
+    this.isEditing = !_.isEqual(this.meal, this.newMeal);
 
-      if (!this.isEditing) {
-        this.meal = _.cloneDeep(this.newMeal);
-      }
-
-      const groupControls = {};
-
-      for (let key in this.meal) {
-        if (this.meal.hasOwnProperty(key)) {
-          let groupControl = [this.meal[key]];
-
-          if (key === 'name') {
-            groupControl.push(Validators.required);
-          }
-
-          groupControls[key] = groupControl;
-        }
-      }
-
-      this.mealForm = this.fb.group(groupControls);
-
-      this.addMealModal.show();
+    if (!this.isEditing) {
+      this.meal = _.cloneDeep(this.newMeal);
     }
+
+    const groupControls = {};
+
+    for (let key in this.meal) {
+      if (this.meal.hasOwnProperty(key)) {
+        let groupControl = [this.meal[key]];
+
+        if (key === 'name') {
+          groupControl.push(Validators.required);
+        }
+
+        groupControls[key] = groupControl;
+      }
+    }
+
+    this.mealForm = this.fb.group(groupControls);
   }
 
   updateValue(key, operator) {
@@ -96,7 +82,6 @@ export class MealModalComponent implements OnInit, OnChanges {
 
     if (this.mealForm.valid) {
       if (_.isEqual(this.mealForm.value, this.meal)) {
-        this.closeMealModal();
         return;
       }
 
@@ -110,16 +95,7 @@ export class MealModalComponent implements OnInit, OnChanges {
         mealPromise = this.mealService.updateMeal(this.meal.id, meal);
       }
 
-      mealPromise.then(returnedMeal => {
-        this.mealFormSubmitted = false;
-        this.update.emit({meal: returnedMeal, isEditing: this.isEditing});
-        this.addMealModal.hide();
-      });
+      mealPromise.then(returnedMeal => this.dialogRef.close({meal: returnedMeal, isEditing: this.isEditing}));
     }
-  }
-
-  closeMealModal() {
-    this.update.emit({isCancel: true});
-    this.addMealModal.hide();
   }
 }

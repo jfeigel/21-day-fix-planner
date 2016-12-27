@@ -2,6 +2,7 @@
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     name: DataTypes.STRING,
+    image: DataTypes.STRING,
     green: {
       type: DataTypes.DECIMAL,
       defaultValue: 0.0

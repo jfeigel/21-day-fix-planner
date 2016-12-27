@@ -1,40 +1,24 @@
-<div class="page-header">
-  <h3>
-    Users <button (click)="showUserModal()" class="btn btn-primary pull-right"><i class="material-icons">add</i><span class="hidden-xs"> Add User</span></button>
-  </h3>
+<div fxLayout="row" fxLayoutAlign="space-around center">
+  <div fxFlex="100%"><h1>Users</h1></div>
+  <div fxFlex><button md-button color="primary" (click)="showUserModal()">Add User</button></div>
 </div>
-<tdf-user-modal [user]="selectedUser" [action]="action" (update)="update($event)"></tdf-user-modal>
-<tdf-delete-user-modal [user]="selectedUser" [action]="action" (delete)="deleteUser($event)"></tdf-delete-user-modal>
-<table class="table">
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Green</th>
-      <th>Purple</th>
-      <th>Red</th>
-      <th>Yellow</th>
-      <th>Blue</th>
-      <th>Orange</th>
-      <th>Teaspoon</th>
-      <th colspan="2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users">
-      <td width="100">{{user.name}}</td>
-      <td width="100"><span class="label label-green">{{user.green}}</span></td>
-      <td width="100"><span class="label label-purple">{{user.purple}}</span></td>
-      <td width="100"><span class="label label-red">{{user.red}}</span></td>
-      <td width="100"><span class="label label-yellow">{{user.yellow}}</span></td>
-      <td width="100"><span class="label label-blue">{{user.blue}}</span></td>
-      <td width="100"><span class="label label-orange">{{user.orange}}</span></td>
-      <td width="100"><span class="label label-teaspoon">{{user.teaspoon}}</span></td>
-      <td width="100">
-        <button type="button" class="btn btn-info" (click)="editUser(user)"><i class="material-icons">create</i><span class="hidden-xs"> Edit</span></button>
-      </td>
-      <td width="100">
-        <button type="button" class="btn btn-danger" (click)="showDeleteModal(user)"><i class="material-icons">delete</i><span class="hidden-xs"> Delete</span></button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="card-container" fxLayout="row" fxLayoutAlign="start" fxLayoutWrap="wrap">
+  <md-card *ngFor="let user of users" fxFlex="0 0 calc(20% - 24px)">
+    <div class="md-card-title-container" fxLayout="row" fxLayoutAlign="start center">
+      <img md-card-avatar [src]="'/assets/users/' + user.image" *ngIf="user.image">
+      <span md-card-avatar *ngIf="!user.image" fxLayout="row" fxLayoutAlign="center center"><i class="material-icons">person</i></span>
+      <md-card-title>{{user.name}}</md-card-title>
+    </div>
+    <md-card-content>
+      <md-divider></md-divider>
+      <div class="point-container" fxLayout="row" fxLayoutAlign="start" fxLayoutWrap="wrap">
+        <span *ngFor="let group of groups" class="label" [ngClass]="getUserClass(group, user[group])" fxFlex="0 0 calc((100% / 7) - 12px">{{user[group]}}</span>
+      </div>
+      <md-divider></md-divider>
+    </md-card-content>
+    <md-card-footer>
+      <button type="button" md-button color="primary" (click)="editUser(user)">Edit</button>
+      <button type="button" md-button color="primary" (click)="showDeleteModal(user)">Delete</button>
+    </md-card-footer>
+  </md-card>
+</div>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 
 import * as _ from 'lodash';
 
 import { Meal } from './meal';
 import { MealService } from './meal.service';
 import { MealModalComponent } from './meal-modal/meal-modal.component';
+import { DeleteMealModalComponent } from './delete-meal-modal/delete-meal-modal.component';
 
 @Component({
   selector: 'tdf-meal',
@@ -12,24 +14,32 @@ import { MealModalComponent } from './meal-modal/meal-modal.component';
   styleUrls: ['./meal.component.scss']
 })
 export class MealComponent implements OnInit {
+  mealModalDialogRef: MdDialogRef<MealModalComponent>;
+  deleteMealModalDialogRef: MdDialogRef<DeleteMealModalComponent>;
+  config: MdDialogConfig = {
+    disableClose: true
+  };
+
   meals: Meal[];
   newMeal: Meal = new Meal();
-  selectedMeal: Meal;
-  isEditing: Boolean = false;
-  action: String = null;
   groups: String[] = [];
+  showDescription: Boolean[] = [];
 
   constructor(
-    private mealService: MealService
+    private mealService: MealService,
+    public dialog: MdDialog
   ) { }
 
   ngOnInit() {
     this.mealService.getMeals()
-      .then(meals => this.meals = meals);
-    
+      .then(meals => {
+        this.meals = meals;
+        this.showDescription = _.fill(Array(this.meals.length), false);
+      });
+
     for (let key in this.newMeal) {
       if (this.newMeal.hasOwnProperty(key)) {
-        if (key !== 'name' && key !== 'id') {
+        if (['name', 'id', 'tags', 'description'].indexOf(key) === -1) {
           this.groups.push(key);
         }
       }
@@ -41,19 +51,33 @@ export class MealComponent implements OnInit {
   }
 
   showMealModal(): void {
-    this.action = 'New';
-    this.selectedMeal = new Meal();
-  }
+    this.mealModalDialogRef = this.dialog.open(MealModalComponent, this.config);
+    this.mealModalDialogRef.componentInstance.meal = new Meal();
 
-  showDeleteModal(selectedMeal: Meal): void {
-    this.action = 'Delete';
-    this.selectedMeal = selectedMeal;
+    this.mealModalDialogRef.afterClosed().subscribe(result =>  {
+      this.mealModalDialogRef = null;
+      this.update(result);
+    });
   }
 
   editMeal(selectedMeal: Meal): void {
-    this.isEditing = true;
-    this.action = 'Edit';
-    this.selectedMeal = selectedMeal;
+    this.mealModalDialogRef = this.dialog.open(MealModalComponent, this.config);
+    this.mealModalDialogRef.componentInstance.meal = selectedMeal;
+
+    this.mealModalDialogRef.afterClosed().subscribe(result =>  {
+      this.mealModalDialogRef = null;
+      this.update(result);
+    });
+  }
+
+  showDeleteModal(selectedMeal: Meal): void {
+    this.deleteMealModalDialogRef = this.dialog.open(DeleteMealModalComponent, this.config);
+    this.deleteMealModalDialogRef.componentInstance.meal = selectedMeal;
+
+    this.deleteMealModalDialogRef.afterClosed().subscribe(result =>  {
+      this.deleteMealModalDialogRef = null;
+      this.deleteMeal(result);
+    });
   }
 
   deleteMeal(id: String): void {
@@ -62,25 +86,20 @@ export class MealComponent implements OnInit {
         .then(() => {
           const mealIndex = _.findIndex(this.meals, {id: id});
           this.meals.splice(mealIndex, 1);
-          this.selectedMeal = null;
+          this.showDescription.splice(mealIndex, 1);
         });
-    } else {
-      this.selectedMeal = null;
     }
   }
 
-  update(results): void {
-    if (results.isCancel) {
-      this.selectedMeal = null;
+  update(result): void {
+    if (!result) {
       return;
-    }
-    if (!results.isEditing) {
-      this.meals.push(results.meal);
+    } else if (!result.isEditing) {
+      this.meals.push(result.meal);
+      this.showDescription.push(false);
     } else {
-      const mealIndex = _.findIndex(this.meals, {id: results.meal.id});
-      this.meals[mealIndex] = results.meal;
+      const mealIndex = _.findIndex(this.meals, {id: result.meal.id});
+      this.meals[mealIndex] = result.meal;
     }
-
-    this.selectedMeal = null;
   }
 }
