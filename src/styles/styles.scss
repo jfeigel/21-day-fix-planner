@@ -1,0 +1,12 @@
+@import 'variables';
+
+@import '~@angular/material/core/theming/all-theme';
+@include md-core();
+@import 'theme';
+@include angular-material-theme($theme);
+
+@import 'global';
+@import 'input';
+@import 'points';
+@import 'card';
+@import 'dialog';

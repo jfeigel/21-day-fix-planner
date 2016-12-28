@@ -6,6 +6,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import 'hammerjs';
+
 import { AppComponent } from './app.component';
 import { PlannerComponent } from './planner/planner.component';
 import { MealComponent } from './meal/meal.component';
