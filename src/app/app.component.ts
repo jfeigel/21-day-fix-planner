@@ -1,6 +1,4 @@
-import { Component, ViewContainerRef } from '@angular/core';
-
-import { CollapseModule } from 'ng2-bootstrap';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'tdf-root',
@@ -10,6 +8,11 @@ import { CollapseModule } from 'ng2-bootstrap';
 export class AppComponent {
   title = '21 Day Fix Planner';
   isMenuCollapsed: Boolean = true;
+  navItems = [
+    { name: 'Planner', route: '/planner', icon: 'event' },
+    { name: 'Meals', route: '/meals', icon: 'restaurant' },
+    { name: 'Users', route: '/users', icon: 'people' }
+  ];
 
-  constructor(private viewContainerRef: ViewContainerRef) {}
+  constructor() {}
 }

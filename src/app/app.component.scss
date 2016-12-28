@@ -1,0 +1,35 @@
+@import 'src/styles/theme';
+
+.app-content {
+  padding: 20px;
+}
+
+md-toolbar {
+  [md-button] {
+    min-width: auto;
+
+    .md-button-focus-overlay {
+      opacity: 0 !important;
+    }
+  }
+}
+
+md-sidenav {
+  padding: 0 20px;
+  min-width: 200px;
+
+  [md-list-item] {
+    &.active {
+      color: md-color($accent);
+    }
+
+    .material-icons {
+      margin-right: 16px;
+    }
+  }
+}
+
+md-nav-list .active .md-list-item {
+  background: rgba(0, 0, 0, 0.04);
+  cursor: default;
+}

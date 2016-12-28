@@ -1,0 +1,96 @@
+.label.label-green,
+.label.label-purple,
+.label.label-red,
+.label.label-yellow,
+.label.label-blue,
+.label.label-orange,
+.label.label-teaspoon,
+.label.label-disabled,
+md-grid-tile.green,
+md-grid-tile.purple,
+md-grid-tile.red,
+md-grid-tile.yellow,
+md-grid-tile.blue,
+md-grid-tile.orange,
+md-grid-tile.teaspoon,
+md-grid-tile.disabled,
+[md-prefix].green,
+[md-prefix].purple,
+[md-prefix].red,
+[md-prefix].yellow,
+[md-prefix].blue,
+[md-prefix].orange,
+[md-prefix].teaspoon,
+[md-prefix].disabled {
+  text-shadow: 1px 1px 0px rgba(50,50,50,0.5);
+  padding: .5em .8em .4em;
+  display: inline-block;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 2px;
+}
+
+[md-prefix].green,
+[md-prefix].purple,
+[md-prefix].red,
+[md-prefix].yellow,
+[md-prefix].blue,
+[md-prefix].orange,
+[md-prefix].teaspoon,
+[md-prefix].disabled {
+  margin-left: 0;
+}
+
+[md-prefix].green,
+md-grid-tile.green,
+.label-green {
+  background-color: $green;
+}
+
+[md-prefix].purple,
+md-grid-tile.purple,
+.label-purple {
+  background-color: $purple;
+}
+
+[md-prefix].red,
+md-grid-tile.red,
+.label-red {
+  background-color: $red;
+}
+
+[md-prefix].yellow,
+md-grid-tile.yellow,
+.label-yellow {
+  background-color: $yellow;
+}
+
+[md-prefix].blue,
+md-grid-tile.blue,
+.label-blue {
+  background-color: $blue;
+}
+
+[md-prefix].orange,
+md-grid-tile.orange,
+.label-orange {
+  background-color: $orange;
+}
+
+[md-prefix].teaspoon,
+md-grid-tile.teaspoon,
+.label-teaspoon {
+  background-color: $teaspoon;
+}
+
+[md-prefix].disabled,
+md-grid-tile.disabled,
+.label-disabled {
+  background-color: #DDDDDD;
+  color: #BBBBBB;
+}

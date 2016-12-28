@@ -1,12 +1,6 @@
 import {
   Component,
-  Inject,
-  EventEmitter,
-  Input,
-  Output,
-  OnInit,
-  OnChanges,
-  ViewChild
+  OnInit
 } from '@angular/core';
 
 import {
@@ -17,7 +11,8 @@ import {
   Validators
 } from '@angular/forms';
 
-import { ModalDirective } from 'ng2-bootstrap';
+import { MdDialogRef } from '@angular/material';
+
 import * as _ from 'lodash';
 
 import { User } from '../user';
@@ -28,12 +23,8 @@ import { UserService } from '../user.service';
   templateUrl: './user-modal.component.html',
   styleUrls: ['./user-modal.component.scss']
 })
-export class UserModalComponent implements OnInit, OnChanges {
-  @Input() user: User;
-  @Input() action: String;
-  @Output() update = new EventEmitter();
-  @ViewChild('addUserModal') public addUserModal: ModalDirective;
-
+export class UserModalComponent implements OnInit {
+  user: User;
   newUser: User = new User();
   userForm: FormGroup;
   isEditing: Boolean = false;
@@ -42,7 +33,8 @@ export class UserModalComponent implements OnInit, OnChanges {
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialogRef: MdDialogRef<UserModalComponent>
   ) { }
 
   ngOnInit() {
@@ -53,34 +45,28 @@ export class UserModalComponent implements OnInit, OnChanges {
         }
       }
     }
-  }
 
-  ngOnChanges(changes) {
-    if (changes.user.currentValue && this.action !== 'Delete') {
-      this.isEditing = !_.isEqual(this.user, this.newUser);
+    this.isEditing = !_.isEqual(this.user, this.newUser);
 
-      if (!this.isEditing) {
-        this.user = _.cloneDeep(this.newUser);
-      }
-
-      const groupControls = {};
-
-      for (let key in this.user) {
-        if (this.user.hasOwnProperty(key)) {
-          let groupControl = [this.user[key]];
-
-          if (key === 'name') {
-            groupControl.push(Validators.required);
-          }
-
-          groupControls[key] = groupControl;
-        }
-      }
-
-      this.userForm = this.fb.group(groupControls);
-
-      this.addUserModal.show();
+    if (!this.isEditing) {
+      this.user = _.cloneDeep(this.newUser);
     }
+
+    const groupControls = {};
+
+    for (let key in this.user) {
+      if (this.user.hasOwnProperty(key)) {
+        let groupControl = [this.user[key]];
+
+        if (key === 'name') {
+          groupControl.push(Validators.required);
+        }
+
+        groupControls[key] = groupControl;
+      }
+    }
+
+    this.userForm = this.fb.group(groupControls);
   }
 
   updateValue(key, operator) {
@@ -96,7 +82,6 @@ export class UserModalComponent implements OnInit, OnChanges {
 
     if (this.userForm.valid) {
       if (_.isEqual(this.userForm.value, this.user)) {
-        this.closeUserModal();
         return;
       }
 
@@ -110,16 +95,7 @@ export class UserModalComponent implements OnInit, OnChanges {
         userPromise = this.userService.updateUser(this.user.id, user);
       }
 
-      userPromise.then(returnedUser => {
-        this.userFormSubmitted = false;
-        this.update.emit({user: returnedUser, isEditing: this.isEditing});
-        this.addUserModal.hide();
-      });
+      userPromise.then(returnedUser => this.dialogRef.close({user: returnedUser, isEditing: this.isEditing}));
     }
-  }
-
-  closeUserModal() {
-    this.update.emit({isCancel: true});
-    this.addUserModal.hide();
   }
 }

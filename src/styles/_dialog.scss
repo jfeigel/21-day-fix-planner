@@ -1,0 +1,13 @@
+md-dialog-actions {
+  box-sizing: border-box;
+  max-height: 100%;
+  display: flex !important;
+  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  -webkit-box-pack: end;
+  -webkit-box-align: center;
+}

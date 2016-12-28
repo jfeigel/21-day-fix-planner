@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import { MaterialModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { CollapseModule, ModalModule } from 'ng2-bootstrap';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { PlannerComponent } from './planner/planner.component';
@@ -13,12 +15,12 @@ import { MealModalComponent } from './meal/meal-modal/meal-modal.component';
 import { UserComponent } from './user/user.component';
 import { UserModalComponent } from './user/user-modal/user-modal.component';
 import { DeleteUserModalComponent } from './user/delete-user-modal/delete-user-modal.component';
+import { DeleteMealModalComponent } from './meal/delete-meal-modal/delete-meal-modal.component';
 
 import { UserService } from './user/user.service';
 import { MealService } from './meal/meal.service';
 
 import { CapitalizePipe } from './pipes/capitalize.pipe';
-import { DeleteMealModalComponent } from './meal/delete-meal-modal/delete-meal-modal.component';
 
 const appRoutes: Routes = [
   {
@@ -26,11 +28,11 @@ const appRoutes: Routes = [
     component: PlannerComponent
   },
   {
-    path: 'meal',
+    path: 'meals',
     component: MealComponent
   },
   {
-    path: 'user',
+    path: 'users',
     component: UserComponent
   },
   {
@@ -57,8 +59,14 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    CollapseModule,
-    ModalModule.forRoot()
+    MaterialModule.forRoot(),
+    FlexLayoutModule.forRoot()
+  ],
+  entryComponents: [
+    MealModalComponent,
+    DeleteMealModalComponent,
+    UserModalComponent,
+    DeleteUserModalComponent
   ],
   providers: [
     UserService,

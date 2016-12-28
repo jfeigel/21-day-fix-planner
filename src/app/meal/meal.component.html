@@ -1,39 +1,26 @@
-<div class="page-header">
-  <h3>
-    Meals <button (click)="showMealModal()" class="btn btn-primary pull-right"><i class="material-icons">add</i><span class="hidden-xs"> Add Meal</span></button>
-  </h3>
+<div fxLayout="row" fxLayoutAlign="space-around center">
+  <div fxFlex="100%"><h1>Meals</h1></div>
+  <div fxFlex><button md-button color="primary" (click)="showMealModal()">Add Meal</button></div>
 </div>
-<tdf-meal-modal [meal]="selectedMeal" [action]="action" (update)="update($event)"></tdf-meal-modal>
-<tdf-delete-meal-modal [meal]="selectedMeal" [action]="action" (delete)="deleteMeal($event)"></tdf-delete-meal-modal>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Meal</th>
-      <th>Points</th>
-      <th colspan="2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let meal of meals">
-      <td width="200">{{meal.name}}</td>
-      <!--
-      <td width="100"><span class="label label-green">{{meal.green}}</span></td>
-      <td width="100"><span class="label label-purple">{{meal.purple}}</span></td>
-      <td width="100"><span class="label label-red">{{meal.red}}</span></td>
-      <td width="100"><span class="label label-yellow">{{meal.yellow}}</span></td>
-      <td width="100"><span class="label label-blue">{{meal.blue}}</span></td>
-      <td width="100"><span class="label label-orange">{{meal.orange}}</span></td>
-      <td width="100"><span class="label label-teaspoon">{{meal.teaspoon}}</span></td>
-      -->
-      <td width="400">
-        <span *ngFor="let group of groups" class="label" [ngClass]="getMealClass(group, meal[group])">{{meal[group]}}</span>
-      </td>
-      <td width="100">
-        <button type="button" class="btn btn-info" (click)="editMeal(meal)"><i class="material-icons">create</i><span class="hidden-xs"> Edit</span></button>
-      </td>
-      <td width="100">
-        <button type="button" class="btn btn-danger" (click)="showDeleteModal(meal)"><i class="material-icons">delete</i><span class="hidden-xs"> Delete</span></button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="card-container" fxLayout="row" fxLayoutAlign="start" fxLayoutWrap="wrap">
+  <md-card *ngFor="let meal of meals" fxFlex="0 0 calc(20% - 24px)" fxLayout="column">
+    <md-card-title>{{meal.name}}</md-card-title>
+    <div md-card-image fxLayout="row" fxLayoutAlign="center center">
+      <img [src]="'/assets/meals/' + meal.image" *ngIf="meal.image">
+      <div *ngIf="!meal.image"><i class="material-icons">restaurant</i></div>
+    </div>
+    <md-card-content>
+      <md-divider></md-divider>
+      <div class="point-container" fxLayout="row" fxLayoutAlign="start" fxLayoutWrap="wrap">
+        <span *ngFor="let group of groups" class="label" [ngClass]="getMealClass(group, meal[group])" fxFlex="0 0 calc((100% / 7) - 12px">{{meal[group]}}</span>
+      </div>
+      <md-divider></md-divider>
+      <p class="description" *ngIf="meal.description">{{meal.description}}</p>
+      <p class="description" *ngIf="!meal.description"><i>No description</i></p>
+    </md-card-content>
+    <md-card-footer>
+      <button type="button" md-button color="primary" (click)="editMeal(meal)">Edit</button>
+      <button type="button" md-button color="primary" (click)="showDeleteModal(meal)">Delete</button>
+    </md-card-footer>
+  </md-card>
+</div>

@@ -1,14 +1,9 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnChanges,
-  ViewChild
+  OnInit
 } from '@angular/core';
 
-import { ModalDirective } from 'ng2-bootstrap';
+import { MdDialogRef } from '@angular/material';
 
 import { Meal } from '../meal';
 
@@ -17,31 +12,13 @@ import { Meal } from '../meal';
   templateUrl: './delete-meal-modal.component.html',
   styleUrls: ['./delete-meal-modal.component.scss']
 })
-export class DeleteMealModalComponent implements OnInit, OnChanges {
-  @Input() meal: Meal;
-  @Input() action: String;
-  @Output() delete = new EventEmitter();
-  @ViewChild('deleteMealModal') public deleteMealModal: ModalDirective;
+export class DeleteMealModalComponent implements OnInit {
+  meal: Meal;
 
-  constructor() { }
+  constructor(
+    public dialogRef: MdDialogRef<DeleteMealModalComponent>
+  ) { }
 
   ngOnInit() { }
-
-  ngOnChanges(changes) {
-    if (changes.meal.currentValue && this.action === 'Delete') {
-      console.log('changes detected, showing modal');
-      this.deleteMealModal.show();
-    }
-  }
-
-  onSubmit(doDelete: boolean) {
-    if (doDelete) {
-      this.delete.emit(this.meal.id);
-    } else {
-      this.delete.emit(null);
-    }
-
-    this.deleteMealModal.hide();
-  }
 
 }
