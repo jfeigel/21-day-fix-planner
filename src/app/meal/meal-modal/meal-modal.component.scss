@@ -1,3 +1,22 @@
 .point-input {
   max-width: 400px;
 }
+
+img {
+  height: 100px;
+}
+
+md-dialog-content > * {
+  &:nth-child(n) {
+    margin-bottom: 10px;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.meal-image-placeholder {
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  padding: .5rem;
+}

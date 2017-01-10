@@ -2,7 +2,7 @@
   <md-sidenav #sidenav>
     <div fxLayout="row" fxLayoutAlign="space-around center">
       <div fxFlex="100%"><h3>Navigation</h3></div>
-      <div fxFlex><button md-button (click)="sidenav.close()"><i class="material-icons">chevron_left</i></button></div>
+      <div fxFlex><button md-button (click)="sidenav.close()"><i class="material-icons">clear</i></button></div>
     </div>
     <md-nav-list>
       <a *ngFor="let navItem of navItems" md-list-item [routerLink]="[navItem.route]" routerLinkActive="active" (click)="sidenav.close()"><i class="material-icons">{{navItem.icon}}</i>{{navItem.name}}</a>

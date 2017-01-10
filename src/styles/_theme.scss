@@ -1,6 +1,7 @@
 @import '~@angular/material/core/theming/theming';
 
-$primary: md-palette($md-indigo);
-$accent:  md-palette($md-pink, A200, A100, A400);
+$primary: md-palette($md-cyan);
+$accent:  md-palette($md-orange, A200, A100, A400);
+$warn:    md-palette($md-red);
 
-$theme: md-light-theme($primary, $accent);
+$theme: md-light-theme($primary, $accent, $warn);

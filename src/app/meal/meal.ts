@@ -1,6 +1,7 @@
 export class Meal {
   id: String;
   name: String;
+  image: String;
   description: String;
   green: number = 0;
   purple: number = 0;

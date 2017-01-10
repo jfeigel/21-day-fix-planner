@@ -9,12 +9,6 @@
       margin-bottom: 16px;
     }
 
-    [md-card-avatar] {
-      background: rgba(0, 0, 0, 0.2);
-      color: #fff;
-      margin-right: 16px;
-    }
-
     [md-card-image] {
       background: rgba(0, 0, 0, 0.2);
       color: #fff;
@@ -46,4 +40,14 @@
       left: 8px;
     }
   }
+}
+
+[md-card-avatar],
+.md-card-avatar {
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  margin-right: 16px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
 }

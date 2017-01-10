@@ -1,6 +1,7 @@
 export class User {
   id: String;
   name: String;
+  image: String;
   green: number = 0;
   purple: number = 0;
   red: number = 0;

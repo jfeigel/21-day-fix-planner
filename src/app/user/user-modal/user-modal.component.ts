@@ -14,6 +14,7 @@ import {
 import { MdDialogRef } from '@angular/material';
 
 import * as _ from 'lodash';
+import { FileUploader } from 'ng2-file-upload';
 
 import { User } from '../user';
 import { UserService } from '../user.service';
@@ -30,6 +31,13 @@ export class UserModalComponent implements OnInit {
   isEditing: Boolean = false;
   userFormSubmitted: Boolean = false;
   groups: String[] = [];
+
+  uploader: FileUploader = new FileUploader({
+    url: 'http://localhost:4000/api/users/upload',
+    autoUpload: true,
+    queueLimit: 1,
+    removeAfterUpload: true
+  });
 
   constructor(
     private userService: UserService,
@@ -67,6 +75,11 @@ export class UserModalComponent implements OnInit {
     }
 
     this.userForm = this.fb.group(groupControls);
+
+    this.uploader.onSuccessItem = (item, response, status, headers) => {
+      let responseSplit = JSON.parse(response).path.split('/');
+      this.user.image = responseSplit[responseSplit.length - 1];
+    };
   }
 
   updateValue(key, operator) {
@@ -86,6 +99,7 @@ export class UserModalComponent implements OnInit {
       }
 
       const user = _.cloneDeep(this.userForm.value);
+      user.image = this.user.image;
       let userPromise;
 
       if (this.isEditing === false) {

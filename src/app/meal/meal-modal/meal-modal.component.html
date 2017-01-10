@@ -2,6 +2,16 @@
 <h4 md-dialog-title *ngIf="isEditing === true">Edit Meal</h4>
 <form (ngSubmit)="onSubmit()" [formGroup]="mealForm" novalidate>
   <md-dialog-content fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <img *ngIf="meal.image" [src]="'/assets/uploads/' + meal.image" />
+      <span class="meal-image-placeholder" *ngIf="!meal.image"><i class="material-icons">restaurant</i></span>
+      <span>
+        <label for="meal-upload" class="md-button md-primary" md-button md-ripple>
+          <span *ngIf="!meal.image">Add</span><span *ngIf="meal.image">Change</span> Image
+        </label>
+        <input id="meal-upload" type="file" hidden ng2FileSelect [uploader]="uploader" />
+      </span>
+    </div>
     <md-input-container [dividerColor]="!mealForm.controls['name'].valid && (mealForm.controls['name'].touched || mealFormSubmitted) ? 'warn': 'primary'">
       <input md-input placeholder="Name" type="text" formControlName="name" />
       <md-hint class="error" *ngIf="mealForm.get('name').hasError('required') && (mealForm.get('name').touched || mealForm.submitted)">Name is a required field.</md-hint>

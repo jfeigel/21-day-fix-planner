@@ -14,6 +14,7 @@ import {
 import { MdDialogRef } from '@angular/material';
 
 import * as _ from 'lodash';
+import { FileUploader } from 'ng2-file-upload';
 
 import { Meal } from '../meal';
 import { MealService } from '../meal.service';
@@ -31,6 +32,13 @@ export class MealModalComponent implements OnInit {
   mealFormSubmitted: Boolean = false;
   groups: String[] = [];
 
+  uploader: FileUploader = new FileUploader({
+    url: 'http://localhost:4000/api/meals/upload',
+    autoUpload: true,
+    queueLimit: 1,
+    removeAfterUpload: true
+  });
+
   constructor(
     private mealService: MealService,
     private fb: FormBuilder,
@@ -40,7 +48,7 @@ export class MealModalComponent implements OnInit {
   ngOnInit() {
     for (let key in this.newMeal) {
       if (this.newMeal.hasOwnProperty(key)) {
-        if (['name', 'id', 'tags', 'description'].indexOf(key) === -1) {
+        if (['name', 'id', 'tags', 'description', 'image'].indexOf(key) === -1) {
           this.groups.push(key);
         }
       }
@@ -55,7 +63,7 @@ export class MealModalComponent implements OnInit {
     const groupControls = {};
 
     for (let key in this.meal) {
-      if (this.meal.hasOwnProperty(key)) {
+      if (this.meal.hasOwnProperty(key) && key !== 'image') {
         let groupControl = [this.meal[key]];
 
         if (key === 'name') {
@@ -67,6 +75,11 @@ export class MealModalComponent implements OnInit {
     }
 
     this.mealForm = this.fb.group(groupControls);
+
+    this.uploader.onSuccessItem = (item, response, status, headers) => {
+      let responseSplit = JSON.parse(response).path.split('/');
+      this.meal.image = responseSplit[responseSplit.length - 1];
+    };
   }
 
   updateValue(key, operator) {
@@ -86,6 +99,7 @@ export class MealModalComponent implements OnInit {
       }
 
       const meal = _.cloneDeep(this.mealForm.value);
+      meal.image = this.meal.image;
       let mealPromise;
 
       if (this.isEditing === false) {

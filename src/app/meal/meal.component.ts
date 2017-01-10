@@ -62,7 +62,7 @@ export class MealComponent implements OnInit {
 
   editMeal(selectedMeal: Meal): void {
     this.mealModalDialogRef = this.dialog.open(MealModalComponent, this.config);
-    this.mealModalDialogRef.componentInstance.meal = selectedMeal;
+    this.mealModalDialogRef.componentInstance.meal = _.cloneDeep(selectedMeal);
 
     this.mealModalDialogRef.afterClosed().subscribe(result =>  {
       this.mealModalDialogRef = null;

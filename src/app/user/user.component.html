@@ -5,7 +5,7 @@
 <div class="card-container" fxLayout="row" fxLayoutAlign="start" fxLayoutWrap="wrap">
   <md-card *ngFor="let user of users" fxFlex="0 0 calc(20% - 24px)">
     <div class="md-card-title-container" fxLayout="row" fxLayoutAlign="start center">
-      <img md-card-avatar [src]="'/assets/users/' + user.image" *ngIf="user.image">
+      <img md-card-avatar [src]="'/assets/uploads/' + user.image" *ngIf="user.image">
       <span md-card-avatar *ngIf="!user.image" fxLayout="row" fxLayoutAlign="center center"><i class="material-icons">person</i></span>
       <md-card-title>{{user.name}}</md-card-title>
     </div>

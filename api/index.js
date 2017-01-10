@@ -5,14 +5,14 @@ const config = require("./config.json");
 const co = require("co");
 const koa = require("koa");
 const cors = require("kcors");
-const bodyParser = require("koa-bodyparser");
+const bodyParser = require("koa-body");
 
 const db = require("./models/index.js");
 
 const app = koa();
 exports.app = app;
 
-app.use(cors());
+app.use(cors({ credentials: true }));
 
 // trust proxy
 app.proxy = true;

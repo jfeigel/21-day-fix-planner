@@ -6,7 +6,7 @@
   <md-card *ngFor="let meal of meals" fxFlex="0 0 calc(20% - 24px)" fxLayout="column">
     <md-card-title>{{meal.name}}</md-card-title>
     <div md-card-image fxLayout="row" fxLayoutAlign="center center">
-      <img [src]="'/assets/meals/' + meal.image" *ngIf="meal.image">
+      <img [src]="'/assets/uploads/' + meal.image" *ngIf="meal.image">
       <div *ngIf="!meal.image"><i class="material-icons">restaurant</i></div>
     </div>
     <md-card-content>

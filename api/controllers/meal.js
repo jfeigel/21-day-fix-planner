@@ -60,3 +60,7 @@ module.exports.destroy = function* destroy() {
 		throw new Error({status: 500, message: err.message || err});
 	}
 };
+
+module.exports.upload = function* upload() {
+	this.body = this.request.body.files.file;
+};
