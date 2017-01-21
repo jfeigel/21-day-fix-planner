@@ -1,0 +1,65 @@
+@import '../../styles/theme';
+
+.calendar {
+  border: 1px solid #ddd;
+  border-top: 0 none;
+  border-left: 0 none;
+}
+
+.calendar-date {
+  border: 1px solid #ddd;
+  border-right: 0 none;
+  border-bottom: 0 none;
+
+  &:after {
+    content: '';
+    float: left;
+    padding-top: 100%;
+  }
+}
+
+.date {
+  height: 2rem;
+  width: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  margin: .5rem;
+
+  &.today {
+    background-color: md-color($accent);
+    color: #fff;
+    border-radius: 50%;
+  }
+}
+
+.md-chip {
+  height: 16px;
+}
+
+.meal-list {
+  width: 100%;
+  
+  .meal {
+    cursor: move;
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    font-size: 13px;
+    padding: 8px;
+    margin: 0 8px 12px 16px;
+    background-color: #fff;
+    color: md-color($primary);
+    border-radius: 16px;
+  }
+}
+
+.chip-image {
+  float: left;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  position: relative;
+  top: -10px;
+  left: -16px;
+  margin-right: -8px;
+}

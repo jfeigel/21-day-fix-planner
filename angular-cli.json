@@ -18,10 +18,12 @@
       "prefix": "tdf",
       "mobile": false,
       "styles": [
+        "../node_modules/dragula/dist/dragula.css",
         "styles/styles.scss"
       ],
       "scripts": [
-        "../node_modules/lodash/lodash.min.js"
+        "../node_modules/lodash/lodash.min.js",
+        "../node_modules/moment/min/moment.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

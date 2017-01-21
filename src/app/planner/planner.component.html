@@ -1,3 +1,24 @@
 <div class="page-header">
   <h3>Planner</h3>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <md-card fxFlex="20%" fxLayout="column">
+      <div class="meal-list" [dragula]="'planner'" [dragulaModel]="meals">
+        <div class="meal-wrapper" *ngFor="let meal of meals">
+          <div class="meal"><img class="chip-image" [src]="'/assets/uploads/' + meal.image" *ngIf="meal.image" />{{meal.name}}</div>
+        </div>
+      </div>
+    </md-card>
+    <md-card fxFlex="75%">
+      <div class="calendar" fxLayout="row">
+        <div class="calendar-date" *ngFor="let date of dates" fxFlex="calc(100% / 7)" fxLayout="column" fxLayoutAlign="start start">
+          <span class="date" [ngClass]="{'today': date.today}">{{date.date}}</span>
+          <div class="meal-list" [dragula]="'planner'" [dragulaModel]="date.meals" fxFlex="1 0 calc(100% - 3rem)">
+            <div class="meal-wrapper" *ngFor="let meal of date.meals">
+              <div class="meal"><img class="chip-image" [src]="'/assets/uploads/' + meal.image" *ngIf="meal.image" />{{meal.name}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-card>
+  </div>
 </div>

@@ -7,6 +7,7 @@ import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { FileUploadModule } from 'ng2-file-upload';
+import { DragulaModule } from 'ng2-dragula';
 
 import 'hammerjs';
 
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MaterialModule.forRoot(),
     FlexLayoutModule.forRoot(),
-    FileUploadModule
+    FileUploadModule,
+    DragulaModule
   ],
   entryComponents: [
     MealModalComponent,
